@@ -2,6 +2,8 @@
 
 function setupTestHelpers() {
     jasmine.clock().install();
+    document.body.style.fontSize = '12.345px';
+
     this.elements = [];
     this.editors = [];
 
