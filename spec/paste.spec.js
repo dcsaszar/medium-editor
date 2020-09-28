@@ -593,6 +593,29 @@ describe('Pasting content', function () {
             }
         });
 
+        it('should not insert style attributes', function () {
+            var i,
+                editorEl = this.el,
+                editor = this.newMediumEditor('.editor', {
+                    delay: 200,
+                    paste: {
+                        forcePlainText: false,
+                        cleanPastedHTML: true
+                    }
+                });
+
+            for (i = 0; i < inlineTests.length; i += 1) {
+                editorEl.innerHTML = '<h2><i><span id="editor-inner">a</span></i>b</h2>';
+
+                selectElementContents(document.getElementById('editor-inner'));
+
+                editor.cleanPaste(inlineTests[i].paste);
+                jasmine.clock().tick(100);
+
+                expect(editorEl.innerHTML).not.toMatch(/style=/);
+            }
+        });
+
         it('should filter inline rich-text when "insertHTML" command is not supported', function () {
             var editor = this.newMediumEditor('.editor', {
                     paste: {
